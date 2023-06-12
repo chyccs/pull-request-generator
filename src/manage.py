@@ -125,14 +125,7 @@ def main():
     openai.api_key = os.getenv("OPENAI_API_KEY", "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")
     openai.Model.list()
 
-    symbols = _symbolize(env["symbols"])
-    _extend_singularize(symbols)
-    _extend_pluralize(symbols)
-    _extend_files(symbols, env["src_path"])
-
-    keywords = sorted(set(symbols), key=len, reverse=True)
-
-    _logging('info', 'keywords', str(keywords))
+    print(openai.Model.list())
 
     pull_request = fetch_pull_request(
         access_token=env['access_token'],
@@ -141,22 +134,12 @@ def main():
         number=int(env['pull_request_number']),
     )
 
-    _logging('info', 'pull_request', str(pull_request))
-
-    tag, plain_title = _parse_title(pull_request.title)
-
-    if _is_bump(plain_title):
-        decorated_title = f'{tag}: {_decorate_bump(plain_title, pull_request.head.ref)}'
-        decorated_body = pull_request.body
-    else:
-        plain_title = _decorate_number(plain_title)
-        decorated_title = f'{tag}: {_highlight(plain_title, keywords)}'
-        decorated_body = _highlight(pull_request.body, keywords)
-
-    pull_request.edit(
-        title=(decorated_title or pull_request.title),
-        body=(decorated_body or pull_request.body),
-    )
+    print(pull_request)
+    
+    # pull_request.edit(
+    #     title=(decorated_title or pull_request.title),
+    #     body=(decorated_body or pull_request.body),
+    # )
 
 
 if __name__ == "__main__":
