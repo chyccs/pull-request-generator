@@ -7,6 +7,7 @@ from typing import (
     List,
     Set,
 )
+
 import openai
 from inflection import (
     humanize,
@@ -135,7 +136,7 @@ def main():
     )
 
     print(pull_request)
-    
+
     # pull_request.edit(
     #     title=(decorated_title or pull_request.title),
     #     body=(decorated_body or pull_request.body),
