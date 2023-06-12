@@ -123,7 +123,7 @@ def _symbolize(raw_symbols: str):
 def main():
 
     openai.organization = "org-H7ABqZ7qmV9zSWibV2hCj3Am"
-    openai.api_key = os.getenv("OPENAI_API_KEY", "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")
+    openai.api_key = os.getenv("OPENAI_API_KEY", "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")
     openai.Model.list()
 
     print(openai.Model.list())
