@@ -1,0 +1,89 @@
+name: 'Pull Request Generator'
+
+description: 'GitHub Action that helps you make pull-requests look nice'
+
+branding:
+  icon: 'italic'
+  color: 'red'
+
+inputs:
+  language:
+    description: 'language'
+    required: true
+    default: ${{ github.event.pull_request.head.repo.language }}
+
+  src_path:
+    description: 'Path of source code'
+    required: true
+    default: "."
+
+  GITHUB_TOKEN:
+    description: 'Github Token'
+    required: true
+    default: "."
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check Variables
+      if: contains(fromJSON('["python", "csharp"]'), inputs.language) != true
+      run: |
+        echo "::error::${{ inputs.language }} is not supported language"
+        exit 1
+      shell: bash
+
+    - name: Move to path of action
+      run: |
+        cd ${{ github.action_path }}
+        pwd="$(pwd)"
+        echo "local_action_path=$pwd" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - id: cache-pipenv
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.local_action_path }}/.venv/
+        key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+    - name: Install pipenv
+      run: |
+        cd ${{ github.action_path }}
+        python -m pip install --upgrade pipenv
+      shell: bash
+
+    - name: Install dependencies
+      if: steps.cache-pipenv.outputs.cache-hit != 'true'
+      run: |
+        cd ${{ github.action_path }}
+        export PIPENV_VENV_IN_PROJECT=1
+        pipenv install --dev
+      shell: bash
+
+    - name: Search symbol
+      run: |
+        cd ${{ github.action_path }}
+        LANGUAGE="$(echo ${{ inputs.language }} | tr '[:upper:]' '[:lower:]')"
+        echo 'symbols<<\n' >> $GITHUB_ENV
+        symbols="$(pipenv run semgrep --config=${{ env.local_action_path }}/src/rules/$LANGUAGE.yml ${{ inputs.src_path }} -q --vim | awk -F ':' '{ print $6 }' | sort | uniq)"
+        echo "$symbols" >> $GITHUB_ENV
+        echo '\n' >> $GITHUB_ENV
+      shell: bash
+
+    - name: Run manage.py
+      id: main
+      run: |
+        cd ${{ github.action_path }}
+        pipenv run python ${{ env.local_action_path }}/src/manage.py
+      shell: bash
+      env:
+        owner: ${{ github.repository_owner }}
+        repository: ${{ github.event.repository.name }}
+        pull_request_number: ${{ github.event.pull_request.number }}
+        access_token: ${{ inputs.GITHUB_TOKEN }}
+        src_path: ${{ inputs.src_path }}
+        symbols: ${{ env.symbols }}
