@@ -39,8 +39,8 @@ def _logging(level: str, title: str, message: str):
     print(f'::{level} title={title}::{message}, file={frame.filename}, line={frame.lineno}')
 
 
-def _is_bump(title: str):
-    return 'bump' in title.lower()
+def _required(title: str):
+    return 'fill me' in title.lower()
 
 
 def __can_relocate_words(title: str):
@@ -122,26 +122,42 @@ def _symbolize(raw_symbols: str):
 
 def main():
 
-    openai.organization = "org-H7ABqZ7qmV9zSWibV2hCj3Am"
-    openai.api_key = os.getenv("OPENAI_API_KEY", "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")
-    openai.Model.list()
-
-    print(openai.Model.list())
+    openai.organization = "org-JAnMEEEFNvtPSGwRA1DVF3Yu"
+    openai.api_key = os.getenv("OPENAI_API_KEY", "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")
 
     pull_request = fetch_pull_request(
-        access_token=env['access_token'],
-        owner=env['owner'],
-        repository=env['repository'],
-        number=int(env['pull_request_number']),
+        access_token=os.getenv("access_token", "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"),
+        owner=os.getenv("owner", "chyccs"),
+        repository=os.getenv("repository", "pull-request-generator"),
+        number=int(os.getenv("pull_request_number", "4"),),
     )
 
-    print(pull_request)
+    # if not _required(pull_request.title):
+    #     return
+    
+    patches = ['Can you summarize the code changes I\'m about to enter in single lowercase Conventional Commits 1.0.0 format?']
+    
+    for f in pull_request.get_files():
+        patches.append(f.patch)
 
-    # pull_request.edit(
-    #     title=(decorated_title or pull_request.title),
-    #     body=(decorated_body or pull_request.body),
-    # )
+    prompt = '\n'.join(patches)
 
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=150,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["\"\"\""],
+    )
+
+    print(response)
+
+    pull_request.edit(
+        title=(response['choices'][0]['text']),
+    )
 
 if __name__ == "__main__":
     main()
