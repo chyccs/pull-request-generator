@@ -39,7 +39,8 @@ def main():
     prompt = '\n'.join(patches)
 
     response = openai.Completion.create(
-        model="text-davinci-003",
+        #model="text-davinci-003",
+        model="code-davinci-002",
         prompt=prompt,
         temperature=0,
         max_tokens=150,
