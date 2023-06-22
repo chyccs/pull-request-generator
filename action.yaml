@@ -7,30 +7,22 @@ branding:
   color: 'red'
 
 inputs:
-  language:
-    description: 'language'
-    required: true
-    default: ${{ github.event.pull_request.head.repo.language }}
-
-  src_path:
-    description: 'Path of source code'
-    required: true
-    default: "."
 
   GITHUB_TOKEN:
     description: 'Github Token'
     required: true
-    default: "."
+
+  OPENAI_ORG:
+    description: 'OpenAI API Organization'
+    required: true
+
+  OPENAI_API_KEY:
+    description: 'OpenAI API KEY'
+    required: true
 
 runs:
   using: 'composite'
   steps:
-    - name: Check Variables
-      if: contains(fromJSON('["python", "csharp"]'), inputs.language) != true
-      run: |
-        echo "::error::${{ inputs.language }} is not supported language"
-        exit 1
-      shell: bash
 
     - name: Move to path of action
       run: |
@@ -75,5 +67,5 @@ runs:
         repository: ${{ github.event.repository.name }}
         pull_request_number: ${{ github.event.pull_request.number }}
         access_token: ${{ inputs.GITHUB_TOKEN }}
-        src_path: ${{ inputs.src_path }}
-        symbols: ${{ env.symbols }}
+        open_ai_org: ${{ inputs.OPENAI_ORG }}
+        open_ai_api_key: ${{ inputs.OPENAI_API_KEY }}

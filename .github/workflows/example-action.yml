@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  typography:
+  example:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,9 +18,7 @@ jobs:
       - name: Run main
         id: main
         uses: ./ # Uses an action in the root directory
-        # or use a released GitHub Action
-        #uses: chyccs/pull-request-typography@master
         with:
-          language: python
-          src_path: "./src/**/*.py"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_ORG: ${{ secrets.OPENAI_ORG }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

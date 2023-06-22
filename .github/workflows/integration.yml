@@ -58,10 +58,3 @@ jobs:
           cd src
           pipenv run coverage run -m unittest main/tests/test_manage.py
           pipenv run coverage xml
-
-      - name: Upload coverage to codeclimate
-        uses: paambaati/codeclimate-action@v3.2.0
-        env:
-          CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
-        with:
-          coverageLocations: ./src/coverage.xml:coverage.py
