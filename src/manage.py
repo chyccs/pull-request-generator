@@ -30,7 +30,7 @@ def main():
     #     return
 
     patches = [
-        '## Please summarize this source code fix in one comprehensive sentence of 30 characters or less. Then modify it according to Conventional Commits 1.0.0 rules'
+        '## Please summarize this source code changes in one comprehensive sentence of 30 characters or less. Then modify it according to Conventional Commits 1.0.0 rules',
     ]
 
     for f in pull_request.get_files():
@@ -44,7 +44,7 @@ def main():
         model="text-davinci-003",
         prompt=prompt,
         temperature=0,
-        max_tokens=150,
+        max_tokens=1500,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0,
