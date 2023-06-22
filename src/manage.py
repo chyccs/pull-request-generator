@@ -26,11 +26,11 @@ def main():
         number=int(os.getenv("pull_request_number")),
     )
 
-    if not _required(pull_request.title):
-        return
+    # if not _required(pull_request.title):
+    #     return
 
     patches = [
-        'Can you summarize this source code modification in one sentence in the format of Conventional Commits?',
+        'Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?',
     ]
 
     for f in pull_request.get_files():
