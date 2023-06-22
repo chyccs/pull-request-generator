@@ -30,7 +30,7 @@ def main():
         return
 
     patches = [
-        'Can you summarize the changes I\'m about to enter in single lowercase Conventional Commits 1.0.0 format?',
+        'Can you summarize this source code modification in one sentence in the format of Conventional Commits?',
     ]
 
     for f in pull_request.get_files():
