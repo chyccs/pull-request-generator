@@ -34,6 +34,7 @@ def main():
     ]
 
     for f in pull_request.get_files():
+        _logging(level='info', title=f.filename, message=f.patch)
         patches.append(f.patch)
 
     prompt = '\n'.join(patches)
