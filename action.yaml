@@ -11,7 +11,14 @@ inputs:
   GITHUB_TOKEN:
     description: 'Github Token'
     required: true
-    default: "."
+
+  OPENAI_ORG:
+    description: 'OpenAI API Organization'
+    required: true
+
+  OPENAI_API_KEY:
+    description: 'OpenAI API KEY'
+    required: true
 
 runs:
   using: 'composite'
@@ -60,3 +67,5 @@ runs:
         repository: ${{ github.event.repository.name }}
         pull_request_number: ${{ github.event.pull_request.number }}
         access_token: ${{ inputs.GITHUB_TOKEN }}
+        open_ai_org: ${{ inputs.OPENAI_ORG }}
+        open_ai_api_key: ${{ inputs.OPENAI_API_KEY }}

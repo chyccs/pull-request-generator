@@ -18,7 +18,7 @@ jobs:
       - name: Run main
         id: main
         uses: ./ # Uses an action in the root directory
-        # or use a released GitHub Action
-        #uses: chyccs/pull-request-typography@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_ORG: ${{ secrets.OPENAI_ORG }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

@@ -122,8 +122,8 @@ def _symbolize(raw_symbols: str):
 
 def main():
 
-    openai.organization = "org-JAnMEEEFNvtPSGwRA1DVF3Yu"
-    openai.api_key = os.getenv("OPENAI_API_KEY", "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")
+    openai.organization = os.getenv("open_ai_org", "org-JAnMEEEFNvtPSGwRA1DVF3Yu")
+    openai.api_key = os.getenv("open_ai_api_key", "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")
 
     pull_request = fetch_pull_request(
         access_token=os.getenv("access_token", "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"),
