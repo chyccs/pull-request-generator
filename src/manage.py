@@ -30,11 +30,12 @@ def main():
     #     return
 
     patches = [
-        'Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?',
+        '#Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?',
     ]
 
     for f in pull_request.get_files():
         _logging(level='info', title=f.filename, message=f.patch)
+        patches.append(f'\n# modifications of {f.filename}')
         patches.append(f.patch)
 
     prompt = '\n'.join(patches)
