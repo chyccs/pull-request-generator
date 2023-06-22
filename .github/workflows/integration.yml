@@ -39,12 +39,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-integration-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          key: ${{ runner.os }}-integration-pipenv-${{ hashFiles('**/Pipfile') }}
 
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
-        run: |
-          pipenv install --dev
+        run: pipenv install --dev
 
       - name: Lint
         run: |
