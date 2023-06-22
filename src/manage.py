@@ -53,7 +53,7 @@ def main():
         # stop=["#"],
     )
 
-    _logging(level='info', title='pull-request topic created', message=response['choices'][0]['text'])
+    _logging(level='info', title=f'pull-request topic created : {response["choices"][0]["text"]}', message='')
 
     pull_request.edit(
         title=(response['choices'][0]['text']),
