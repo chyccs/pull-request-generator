@@ -30,7 +30,7 @@ def main():
     #     return
 
     patches = [
-        '# Github pull request changes',
+        # '# Github pull request changes',
     ]
 
     for f in pull_request.get_files():
