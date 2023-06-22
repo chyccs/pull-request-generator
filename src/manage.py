@@ -50,10 +50,10 @@ def main():
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0,
-        # stop=["#"],
+        stop=["#"],
     )
 
-    _logging(level='info', title=f'pull-request topic created : {response["choices"][0]["text"]}', message='')
+    _logging(level='info', title=f'openai response : {response}', message='')
 
     pull_request.edit(
         title=(response['choices'][0]['text']),
