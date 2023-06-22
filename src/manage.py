@@ -30,15 +30,15 @@ def main():
     #     return
 
     patches = [
-        #'##### Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?',
+        '# Github pull request changes',
     ]
 
     for f in pull_request.get_files():
         _logging(level='info', title=f.filename, message=f.patch)
-        patches.append(f'#### Modifications of {f.filename}')
+        patches.append(f'# Modifications of {f.filename}')
         patches.append(f.patch)
         
-    patches.append('##### Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?')
+    patches.append('# Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?')
     
     prompt = '\n'.join(patches)
 
@@ -50,7 +50,7 @@ def main():
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0,
-        stop=["###"],
+        # stop=["#"],
     )
 
     _logging(level='info', title='pull-request topic created', message=response['choices'][0]['text'])
