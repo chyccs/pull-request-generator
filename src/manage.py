@@ -30,7 +30,7 @@ def main():
         return
 
     patches = [
-        'Can you summarize the code changes I\'m about to enter in single lowercase Conventional Commits 1.0.0 format?',
+        'Can you summarize the changes I\'m about to enter in single lowercase Conventional Commits 1.0.0 format?',
     ]
 
     for f in pull_request.get_files():
@@ -39,8 +39,7 @@ def main():
     prompt = '\n'.join(patches)
 
     response = openai.Completion.create(
-        #model="text-davinci-003",
-        model="code-davinci-edit-001",
+        model="text-davinci-003",
         prompt=prompt,
         temperature=0,
         max_tokens=150,
