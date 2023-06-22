@@ -38,7 +38,7 @@ def main():
         patches.append(f'## Modifications of {f.filename}')
         patches.append(f.patch)
         
-    patches.append('## Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits?')
+    patches.append('## Can you summarize these source code modifications in one comprehensive sentence in the format of Conventional Commits 1.0.0?')
     
     prompt = '\n'.join(patches)
 
