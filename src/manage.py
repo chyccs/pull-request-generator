@@ -35,7 +35,7 @@ def main():
 
     for f in pull_request.get_files():
         _logging(level='info', title=f.filename, message=f.patch)
-        patches.append(f'\n# modifications of {f.filename}')
+        patches.append(f'Modifications of {f.filename}')
         patches.append(f.patch)
 
     prompt = '\n'.join(patches)
