@@ -29,27 +29,31 @@ def main():
     if not _required(pull_request.title):
         return
 
-    patches = [
-        'Can you summarize the code changes I\'m about to enter in single lowercase Conventional Commits 1.0.0 format?',
-    ]
+    patches = []
 
     for f in pull_request.get_files():
+        _logging(level='info', title=f.filename, message=f.patch)
+        patches.append(f'###### Modifications of {f.filename}')
         patches.append(f.patch)
 
+    patches.append(
+        '###### Please summarize this source code changes in one comprehensive sentence of 30 characters or less.'
+        'Then modify it according to Conventional Commits 1.0.0 rules'
+    )
     prompt = '\n'.join(patches)
 
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
         temperature=0,
-        max_tokens=150,
+        max_tokens=1500,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0,
-        stop=["\"\"\""],
+        stop=["######"],
     )
 
-    _logging(level='info', title='pull-request topic created', message=response['choices'][0]['text'])
+    _logging(level='info', title=f'openai : {response}', message='')
 
     pull_request.edit(
         title=(response['choices'][0]['text']),

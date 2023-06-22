@@ -1,6 +1,6 @@
-name: 'Pull Request Generator'
+name: 'Pull Request Title Generator'
 
-description: 'GitHub Action that helps you make pull-requests look nice'
+description: 'GitHub Action that extracts the title by summarizing the contents of pull-request'
 
 branding:
   icon: 'italic'
