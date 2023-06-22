@@ -40,7 +40,7 @@ def main():
 
     response = openai.Completion.create(
         #model="text-davinci-003",
-        model="code-davinci-002",
+        model="code-davinci-edit-001",
         prompt=prompt,
         temperature=0,
         max_tokens=150,
