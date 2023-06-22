@@ -30,14 +30,15 @@ def main():
     #     return
 
     patches = [
-        '## Please summarize this source code changes in one comprehensive sentence of 30 characters or less. Then modify it according to Conventional Commits 1.0.0 rules',
+        # '## Please summarize source code changes in one comprehensive sentence of 30 characters or less. Then modify it according to Conventional Commits 1.0.0 rules',
     ]
 
     for f in pull_request.get_files():
         _logging(level='info', title=f.filename, message=f.patch)
         patches.append(f'## Modifications of {f.filename}')
         patches.append(f.patch)
-
+        
+    patches.append('## Please summarize this source code changes in one comprehensive sentence of 30 characters or less. Then modify it according to Conventional Commits 1.0.0 rules')
     prompt = '\n'.join(patches)
 
     response = openai.Completion.create(
