@@ -13,7 +13,7 @@ autopep8 = "*"
 pre-commit = "*"
 
 [packages]
-PyGithub = "==1.58.2"
+PyGithub = "==1.59.0"
 inflection = "*"
 coverage = "*"
 openai = "*"
